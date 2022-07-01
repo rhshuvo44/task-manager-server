@@ -31,6 +31,11 @@ async function run() {
       const result = await tasksCollection.insertOne(data);
       res.send(result);
     });
+    // Get all task
+    app.get("/task/all", async (req, res) => {
+      const tasks = await tasksCollection.find({}).toArray();
+      res.send(tasks);
+    });
   } finally {
   }
 }
