@@ -24,7 +24,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     await client.connect();
-    const taskCollection = client.db("task-manager").collection("tasks");
+    const tasksCollection = client.db("task-manager").collection("tasks");
     // Create task
     app.post("/task/create", async (req, res) => {
       const data = { ...req.body, createdAt: new Date() };
@@ -34,6 +34,16 @@ async function run() {
     // Get all task
     app.get("/task/all", async (req, res) => {
       const tasks = await tasksCollection.find({}).toArray();
+      res.send(tasks);
+    });
+    // Update task
+    app.put("/task/:id", async (req, res) => {
+      const data = req.body;
+      const id = req.params.id;
+      const tasks = await tasksCollection.updateOne(
+        { _id: ObjectId(id) },
+        { $set: data }
+      );
       res.send(tasks);
     });
   } finally {
