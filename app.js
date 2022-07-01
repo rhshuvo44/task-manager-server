@@ -1,4 +1,3 @@
-
 // Import external module
 const express = require("express");
 const cors = require("cors");
@@ -21,10 +20,21 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true,
   serverApi: ServerApiVersion.v1,
 });
+
+async function run() {
+  try {
+    await client.connect();
+    const taskCollection = client.db("task-manager").collection("tasks");
+  } finally {
+  }
+}
+run().catch(console.dir);
+
+// Initial route
 app.get("/", (req, res) => {
   res.send("Auto Parts server");
 });
-
+// Listen to app
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
