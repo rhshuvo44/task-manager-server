@@ -26,18 +26,18 @@ async function run() {
     await client.connect();
     const tasksCollection = client.db("task-manager").collection("tasks");
     // Create task
-    app.post("/task/create", async (req, res) => {
+    app.post("/create", async (req, res) => {
       const data = { ...req.body, createdAt: new Date() };
       const result = await tasksCollection.insertOne(data);
       res.send(result);
     });
     // Get all task
-    app.get("/task/all", async (req, res) => {
+    app.get("/all", async (req, res) => {
       const tasks = await tasksCollection.find({}).toArray();
       res.send(tasks);
     });
     // Update task
-    app.put("/task/:id", async (req, res) => {
+    app.put("/all/:id", async (req, res) => {
       const data = req.body;
       const id = req.params.id;
       const tasks = await tasksCollection.updateOne(
@@ -47,7 +47,7 @@ async function run() {
       res.send(tasks);
     });
     // Delete task
-    app.delete("/task/:id", async (req, res) => {
+    app.delete("/all/:id", async (req, res) => {
       const id = req.params.id;
       const result = await tasksCollection.deleteOne({ _id: ObjectId(id) });
       res.send(result);
