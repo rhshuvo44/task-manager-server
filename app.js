@@ -11,7 +11,14 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Enable cors
-app.use(cors());
+const corsConfig = {
+  origin: "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,HEADER",
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsConfig));
 
 // Parse request
 app.use(express.json());
@@ -20,7 +27,11 @@ app.use(express.urlencoded({ extended: true }));
 // Connection URL
 const url = process.env.DB_CONNECTION_URL;
 
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverApi: ServerApiVersion.v1,
+});
 
 // Database name
 const dbName = process.env.DB_NAME;
