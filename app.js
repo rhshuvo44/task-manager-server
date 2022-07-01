@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 // Connection URL
 const url = process.env.DB_CONNECTION_URL;
 
-const client = new MongoClient(uri, {
+const client = new MongoClient(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   serverApi: ServerApiVersion.v1,
