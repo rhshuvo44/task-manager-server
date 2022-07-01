@@ -25,6 +25,12 @@ async function run() {
   try {
     await client.connect();
     const taskCollection = client.db("task-manager").collection("tasks");
+    // Create task
+    app.post("/task/create", async (req, res) => {
+      const data = { ...req.body, createdAt: new Date() };
+      const result = await tasksCollection.insertOne(data);
+      res.send(result);
+    });
   } finally {
   }
 }
