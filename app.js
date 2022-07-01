@@ -46,16 +46,23 @@ async function run() {
       );
       res.send(tasks);
     });
+    // Delete task
+    app.delete("/task/:id", async (req, res) => {
+      const id = req.params.id;
+      const result = await tasksCollection.deleteOne({ _id: ObjectId(id) });
+      res.send(result);
+    });
   } finally {
   }
 }
 run().catch(console.dir);
 
 // Initial route
-app.get("/", (req, res) => {
-  res.send("Auto Parts server");
+app.get("/", async (req, res) => {
+  res.send("Task manager server");
 });
+
 // Listen to app
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+app.listen(port, (err) => {
+  if (!err) console.log(`Server successfully running at  PORT ${port}`);
 });
